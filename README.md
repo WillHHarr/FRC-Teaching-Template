@@ -1,10 +1,12 @@
+Future Hopeful Funtionality includes: Branches containing code for various other motor types, Multiple Gyro Supports, Work towards more functional/automated setup features and notation other swervedrive modules or configurations.
+
 This code while formerly made in association with a team, is now an individual project of maintinance to be utilized by FRC teams.
 
-Special thanks must go to FRC Team 3512 (and 364, the creaters of the original ported repository) of whose code was the base of our team's 2023 code, and a majority of the in-depth logic for the swerve drive and we would not have been able to properly function during the build season without it due to some outside limitations on our time getting used to the swerve drive format.
+Special thanks must go to FRC Team 3512 (and 364, the creaters of the original ported repository)  code was a base for which to work off of.
 
-This repository utilizes the use of SparkMax Controllers, Neo Motors, and a Pigeon Gyro for the creation of said repository.
+This repository branch utilizes the use of SparkMax Controllers, Neo Motors, and a Pigeon Gyro for the creation of said repository.
 
-As well, this repository also utilizes the ratios for the MK4i modules from Swerve Drive Specialties of the L2 variation, although double checking these ratios as to if they are still true would be advised.
+As well, this repository also utilizes the ratios for the MK4i modules from Swerve Drive Specialties of the L2 variation, although double checking these ratios as to if they are still true would be advised. If another swerve drive configuration/set is used, the same code base can be used, but some number modifications may be required.
 
 The control system assumption with this current revision of the program controls is with a xbox controller, or at minimum a controller recognized by the drive station as xbox.
 
