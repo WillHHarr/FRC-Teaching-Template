@@ -1,8 +1,8 @@
 Future Hopeful Funtionality includes: Branches containing code for various other motor types, Multiple Gyro Supports, Work towards more functional/automated setup features and notation other swervedrive modules or configurations.
 
-This code while formerly made in association with a team, is now an individual project of maintinance to be utilized by FRC teams.
+This code while formerly made in association with a team, was solely added onto by me and is now an individual project of maintinance to be utilized by FRC teams.
 
-Special thanks must go to FRC Team 3512 (and 364, the creaters of the original ported repository)  code was a base for which to work off of.
+Special thanks must go to FRC Team 3512 (and 364, the creaters of the repo 3512 utilized) of which was a base for which to work off of .
 
 This repository branch utilizes the use of SparkMax Controllers, Neo Motors, and a Pigeon Gyro for the creation of said repository.
 
