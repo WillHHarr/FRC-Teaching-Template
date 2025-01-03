@@ -1,8 +1,8 @@
 package frc.robot;
 
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.PIDConstants;
-import com.pathplanner.lib.util.ReplanningConfig;
+//import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+//import com.pathplanner.lib.util.PIDConstants;
+//import com.pathplanner.lib.util.ReplanningConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -83,6 +83,8 @@ public final class Constants {
         /* {Static, Velocity, Acceleration} */    
         public static final double[] driveMotorsSVA = new double[] {0.3, 2.55, 0.27};
 
+        /* Disabled until 25 release
+
         public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
             new PIDConstants(5.0, 0, 0), // Translation constants 
             new PIDConstants(5.0, 0, 0), // Rotation constants 
@@ -90,6 +92,8 @@ public final class Constants {
             modulePositions[0].getNorm(), // driveNeo base radius (distance from center to furthest module) 
             new ReplanningConfig()
         );
+
+        */
     }
 
     public static final class AutoConstants {

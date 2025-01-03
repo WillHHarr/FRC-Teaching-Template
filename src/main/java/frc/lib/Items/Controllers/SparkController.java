@@ -1,4 +1,4 @@
-package frc.lib.Items.SparkMax;
+package frc.lib.Items.Controllers;
 
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
@@ -6,7 +6,7 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
-import frc.lib.configs.Sparkmax.SparkControllerInfo;
+import frc.lib.configs.Controllers.SparkControllerInfo;
 import frc.lib.util.CANSparkMaxUtil;
 import frc.lib.util.CANSparkMaxUtil.Usage;
 

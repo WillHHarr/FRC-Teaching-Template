@@ -1,7 +1,9 @@
-package frc.lib.configs.Sparkmax;
+package frc.lib.configs.Subsystems;
 
 import com.ctre.phoenix6.hardware.CANcoder;
-import frc.lib.Items.SparkMax.SparkController;
+
+import frc.lib.Items.Controllers.SparkController;
+import frc.lib.configs.Controllers.SparkControllerInfo;
 import frc.robot.Constants;
 
 public class SwerveModuleInfo {

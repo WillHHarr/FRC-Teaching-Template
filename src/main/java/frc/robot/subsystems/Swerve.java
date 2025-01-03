@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.util.PathPlannerLogging;
+//import com.pathplanner.lib.auto.AutoBuilder;
+//import com.pathplanner.lib.util.PathPlannerLogging;
 import com.studica.frc.AHRS;
 import com.studica.frc.AHRS.NavXComType;
 
@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.lib.configs.Sparkmax.SwerveModuleInfo;
+import frc.lib.configs.Subsystems.SwerveModuleInfo;
 import frc.robot.Constants;
 
 public class Swerve extends SubsystemBase {
@@ -45,6 +45,8 @@ public class Swerve extends SubsystemBase {
     
     swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getAngle(), getPositions());
 
+/* Disabled Until 25 Release
+
     AutoBuilder.configureHolonomic(
       this::getPose, 
       this::resetOdometry, 
@@ -69,6 +71,8 @@ public class Swerve extends SubsystemBase {
     PathPlannerLogging.setLogActivePathCallback((poses) -> field.getObject("path").setPoses(poses));
 
     SmartDashboard.putData("Field", field);
+
+  */
   }
 
   @Override

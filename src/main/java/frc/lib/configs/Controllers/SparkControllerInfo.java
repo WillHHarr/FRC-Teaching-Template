@@ -1,4 +1,4 @@
-package frc.lib.configs.Sparkmax;
+package frc.lib.configs.Controllers;
 
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 

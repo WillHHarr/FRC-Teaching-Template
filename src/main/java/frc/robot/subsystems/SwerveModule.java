@@ -10,8 +10,8 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.Constants;
-import frc.lib.Items.SparkMax.SparkController;
-import frc.lib.configs.Sparkmax.SwerveModuleInfo;
+import frc.lib.Items.Controllers.SparkController;
+import frc.lib.configs.Subsystems.SwerveModuleInfo;
 import frc.lib.math.OnboardModuleState;
 
 public class SwerveModule {
