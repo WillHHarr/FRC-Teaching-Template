@@ -42,9 +42,9 @@ public class SparkController {
         this.velConversion = Info.velConversion;
         this.pidList = Info.pidList;
         this.voltageComp = Info.voltageComp;
-        spark = new SparkController(canbusNumber, MotorType.kBrushless);
+        spark = new SparkMax(canbusNumber, MotorType.kBrushless);
         sparkEncode = spark.getEncoder();
-        sparkControl = spark.getPIDController();
+        sparkControl = spark.getClosedLoopController();
         configureSpark();
      }
 
@@ -75,14 +75,17 @@ public class SparkController {
         bEnable = true;
     }
 
-    spark = new CANSparkMax(canbusNumber, CANSparkLowLevel.MotorType.kBrushless);
+    spark = new SparkMax(canbusNumber, MotorType.kBrushless);
     sparkEncode = spark.getEncoder();
-    sparkControl = spark.getPIDController();
+    sparkControl = spark.getClosedLoopController();
     configureSpark();
     }
 
     /* Sets and Flashes the Sparkmax to Passed States */
     public void configureSpark(){
+        
+
+
         spark.restoreFactoryDefaults();
         CANSparkMaxUtil.setCANSparkMaxBusUsage(spark, canbusUse);
         spark.setSmartCurrentLimit(currentLim);
