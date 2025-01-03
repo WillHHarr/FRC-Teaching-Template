@@ -1,6 +1,7 @@
 package frc.lib.configs.Sparkmax;
 
-import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
 import frc.lib.util.CANSparkMaxUtil.Usage;
 import frc.robot.Constants.*;
 
@@ -14,26 +15,74 @@ public class SparkControllerInfo {
     public double[] pidList;
     public double voltageComp;
 
-    public SparkControllerInfo drive(){
-        canbusUse = Usages.driveUsage;
+    public SparkControllerInfo driveNeo(){
+        canbusUse = Usages.driveSparkUsage;
         currentLim = Electical.driveCurrentLim;
         invert = Setup.driveInvert;
-        idleMode = IdleModes.driveIdle;
+        idleMode = IdleModes.driveSparkIdle;
         posConversion = ConversionFactors.driveConversionPositionFactor;
         velConversion = ConversionFactors.driveConversionVelocityFactor;
-        pidList = PID.drivePID;
+        pidList = PID.driveNeoPID;
         voltageComp = Electical.voltageComp;
         return this;
     }
 
-    public SparkControllerInfo angle(){
-        canbusUse = Usages.angleUsage;
+    public SparkControllerInfo angleNeo(){
+        canbusUse = Usages.angleSparkUsage;
         currentLim = Electical.angleCurrentLim;
         invert = Setup.angleInvert;
-        idleMode = IdleModes.angleIdle;
+        idleMode = IdleModes.angleSparkIdle;
         posConversion = ConversionFactors.angleConversionPositionFactor;
         velConversion = ConversionFactors.angleConversionVelocityFactor;
-        pidList = PID.anglePID;
+        pidList = PID.angleNeoPID;
+        voltageComp = Electical.voltageComp;
+        return this;
+    }
+
+    public SparkControllerInfo driveVortex(){
+        canbusUse = Usages.driveSparkUsage;
+        currentLim = Electical.driveCurrentLim;
+        invert = Setup.driveInvert;
+        idleMode = IdleModes.driveSparkIdle;
+        posConversion = ConversionFactors.driveConversionPositionFactor;
+        velConversion = ConversionFactors.driveConversionVelocityFactor;
+        pidList = PID.driveVortexPID;
+        voltageComp = Electical.voltageComp;
+        return this;
+    }
+
+    public SparkControllerInfo angleVortex(){
+        canbusUse = Usages.angleSparkUsage;
+        currentLim = Electical.angleCurrentLim;
+        invert = Setup.angleInvert;
+        idleMode = IdleModes.angleSparkIdle;
+        posConversion = ConversionFactors.angleConversionPositionFactor;
+        velConversion = ConversionFactors.angleConversionVelocityFactor;
+        pidList = PID.angleVortexPID;
+        voltageComp = Electical.voltageComp;
+        return this;
+    }
+
+    public SparkControllerInfo driveKraken(){
+        canbusUse = Usages.driveSparkUsage;
+        currentLim = Electical.driveCurrentLim;
+        invert = Setup.driveInvert;
+        idleMode = IdleModes.driveSparkIdle;
+        posConversion = ConversionFactors.driveConversionPositionFactor;
+        velConversion = ConversionFactors.driveConversionVelocityFactor;
+        pidList = PID.driveKrakenPID;
+        voltageComp = Electical.voltageComp;
+        return this;
+    }
+
+    public SparkControllerInfo angleKraken(){
+        canbusUse = Usages.angleSparkUsage;
+        currentLim = Electical.angleCurrentLim;
+        invert = Setup.angleInvert;
+        idleMode = IdleModes.angleSparkIdle;
+        posConversion = ConversionFactors.angleConversionPositionFactor;
+        velConversion = ConversionFactors.angleConversionVelocityFactor;
+        pidList = PID.angleKrakenPID;
         voltageComp = Electical.voltageComp;
         return this;
     }
