@@ -1,21 +1,19 @@
 package frc.lib.Items.SparkMax;
 
-import com.revrobotics.CANSparkLowLevel;
-import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkPIDController;
-import com.revrobotics.CANSparkBase.IdleMode;
-import com.revrobotics.CANSparkBase.SoftLimitDirection;
-import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import frc.lib.configs.Sparkmax.SparkControllerInfo;
 import frc.lib.util.CANSparkMaxUtil;
 import frc.lib.util.CANSparkMaxUtil.Usage;
 
 public class SparkController {
-    public CANSparkMax spark;
+    public SparkMax spark;
     public RelativeEncoder sparkEncode;
-    public SparkPIDController sparkControl;
+    public SparkClosedLoopController sparkControl;
     public final int canbusNumber;
     private final Usage canbusUse;
     private final int currentLim;
@@ -44,7 +42,7 @@ public class SparkController {
         this.velConversion = Info.velConversion;
         this.pidList = Info.pidList;
         this.voltageComp = Info.voltageComp;
-        spark = new CANSparkMax(canbusNumber, MotorType.kBrushless);
+        spark = new SparkController(canbusNumber, MotorType.kBrushless);
         sparkEncode = spark.getEncoder();
         sparkControl = spark.getPIDController();
         configureSpark();
