@@ -5,11 +5,9 @@ import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
-import frc.lib.util.CANSparkMaxUtil.Usage;
 import frc.robot.Constants.*;
 
 public class SparkControllerInfo {
-    public Usage canbusUse;
     public int currentLim;
     public boolean invert;
     public IdleMode idleMode;
@@ -17,10 +15,10 @@ public class SparkControllerInfo {
     public double velConversion;
     public double[] pidList;
     public double voltageComp;
-    public SparkMaxConfig config = null;
+    public SparkMaxConfig configNeo = null;
+    public SparkFlexConfig configFlex = null;
 
     public SparkControllerInfo driveNeo(){
-        canbusUse = Usages.driveSparkUsage;
         currentLim = Electical.driveCurrentLim;
         invert = Setup.driveInvert;
         idleMode = IdleModes.driveSparkIdle;
@@ -29,22 +27,23 @@ public class SparkControllerInfo {
         pidList = PID.driveNeoPID;
         voltageComp = Electical.voltageComp;
 
-        config = new SparkMaxConfig();
-            config
+        configNeo = new SparkMaxConfig();
+            configNeo
                 .inverted(invert)
-                .idleMode(idleMode);
-            config.encoder
+                .idleMode(idleMode)
+                .smartCurrentLimit(currentLim, currentLim)
+                .voltageCompensation(voltageComp);
+            configNeo.encoder
                 .positionConversionFactor(posConversion)
                 .velocityConversionFactor(velConversion);
-            config.closedLoop
+            configNeo.closedLoop
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-                .pid(pidList[0], pidList[1], pidList[2]);
+                .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
 
         return this;
     }
 
     public SparkControllerInfo angleNeo(){
-        canbusUse = Usages.angleSparkUsage;
         currentLim = Electical.angleCurrentLim;
         invert = Setup.angleInvert;
         idleMode = IdleModes.angleSparkIdle;
@@ -53,22 +52,21 @@ public class SparkControllerInfo {
         pidList = PID.angleNeoPID;
         voltageComp = Electical.voltageComp;
 
-        config = new SparkMaxConfig();
-        config
+        configNeo = new SparkMaxConfig();
+        configNeo
             .inverted(invert)
             .idleMode(idleMode);
-        config.encoder
+        configNeo.encoder
             .positionConversionFactor(posConversion)
             .velocityConversionFactor(velConversion);
-        config.closedLoop
+        configNeo.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            .pid(pidList[0], pidList[1], pidList[2]);
+            .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
         
         return this;
     }
 
     public SparkControllerInfo driveVortex(){
-        canbusUse = Usages.driveSparkUsage;
         currentLim = Electical.driveCurrentLim;
         invert = Setup.driveInvert;
         idleMode = IdleModes.driveSparkIdle;
@@ -77,22 +75,21 @@ public class SparkControllerInfo {
         pidList = PID.driveVortexPID;
         voltageComp = Electical.voltageComp;
 
-        config = new SparkFlexConfig();
-        config
+        configFlex = new SparkFlexConfig();
+        configFlex
             .inverted(invert)
             .idleMode(idleMode);
-        config.encoder
+        configFlex.encoder
             .positionConversionFactor(posConversion)
             .velocityConversionFactor(velConversion);
-        config.closedLoop
+        configFlex.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            .pid(pidList[0], pidList[1], pidList[2]);
+            .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
 
         return this;
     }
 
     public SparkControllerInfo angleVortex(){
-        canbusUse = Usages.angleSparkUsage;
         currentLim = Electical.angleCurrentLim;
         invert = Setup.angleInvert;
         idleMode = IdleModes.angleSparkIdle;
@@ -101,22 +98,21 @@ public class SparkControllerInfo {
         pidList = PID.angleVortexPID;
         voltageComp = Electical.voltageComp;
 
-        config = new SparkFlexConfig();
-        config
+        configFlex = new SparkFlexConfig();
+        configFlex
             .inverted(invert)
             .idleMode(idleMode);
-        config.encoder
+        configFlex.encoder
             .positionConversionFactor(posConversion)
             .velocityConversionFactor(velConversion);
-        config.closedLoop
+        configFlex.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            .pid(pidList[0], pidList[1], pidList[2]);
+            .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
 
         return this;
     }
 
     public SparkControllerInfo driveKraken(){
-        canbusUse = Usages.driveSparkUsage;
         currentLim = Electical.driveCurrentLim;
         invert = Setup.driveInvert;
         idleMode = IdleModes.driveSparkIdle;
@@ -128,7 +124,6 @@ public class SparkControllerInfo {
     }
 
     public SparkControllerInfo angleKraken(){
-        canbusUse = Usages.angleSparkUsage;
         currentLim = Electical.angleCurrentLim;
         invert = Setup.angleInvert;
         idleMode = IdleModes.angleSparkIdle;

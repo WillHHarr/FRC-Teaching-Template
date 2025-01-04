@@ -3,26 +3,18 @@ package frc.lib.Items.Controllers;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 import frc.lib.configs.Controllers.SparkControllerInfo;
-import frc.lib.util.CANSparkMaxUtil;
-import frc.lib.util.CANSparkMaxUtil.Usage;
 
 public class SparkController {
     public SparkMax spark;
     public RelativeEncoder sparkEncode;
     public SparkClosedLoopController sparkControl;
     public final int canbusNumber;
-    private final Usage canbusUse;
-    private final int currentLim;
-    private final boolean invert;
-    private final IdleMode idleMode;
-    private final double posConversion;
-    private final double velConversion;
-    private final double[] pidList;
-    private final double voltageComp;
     private double max = 1;
     private double min = -1;
     public double fLim = 0;
@@ -34,32 +26,15 @@ public class SparkController {
     /* Creates and Configures the Sparkmax Controller*/
     public SparkController(int canbusNumber, SparkControllerInfo Info){
         this.canbusNumber = canbusNumber;
-        this.canbusUse = Info.canbusUse;
-        this.currentLim = Info.currentLim;
-        this.invert = Info.invert;
-        this.idleMode = Info.idleMode;
-        this.posConversion = Info.posConversion;
-        this.velConversion = Info.velConversion;
-        this.pidList = Info.pidList;
-        this.voltageComp = Info.voltageComp;
         spark = new SparkMax(canbusNumber, MotorType.kBrushless);
         sparkEncode = spark.getEncoder();
         sparkControl = spark.getClosedLoopController();
-        configureSpark();
+        configureSpark(Info.configNeo);
      }
 
     /* Creates and Configures the Sparkmax Controller Note: Pass null to N/A fields */
     public SparkController(int canbusNumber, SparkControllerInfo Info, Double min, Double max, Double fLim, Double bLim){
     this.canbusNumber = canbusNumber;
-    this.canbusUse = Info.canbusUse;
-    this.currentLim = Info.currentLim;
-    this.invert = Info.invert;
-    this.idleMode = Info.idleMode;
-    this.posConversion = Info.posConversion;
-    this.velConversion = Info.velConversion;
-    this.pidList = Info.pidList;
-    this.voltageComp = Info.voltageComp;
-    
     if(max != null){
         this.max = max;
     }
@@ -78,32 +53,12 @@ public class SparkController {
     spark = new SparkMax(canbusNumber, MotorType.kBrushless);
     sparkEncode = spark.getEncoder();
     sparkControl = spark.getClosedLoopController();
-    configureSpark();
+    configureSpark(config);
     }
 
     /* Sets and Flashes the Sparkmax to Passed States */
-    public void configureSpark(){
-        
-
-
-        spark.restoreFactoryDefaults();
-        CANSparkMaxUtil.setCANSparkMaxBusUsage(spark, canbusUse);
-        spark.setSmartCurrentLimit(currentLim);
-        spark.setInverted(invert);
-        spark.setIdleMode(idleMode);
-        sparkEncode.setVelocityConversionFactor(velConversion);
-        sparkEncode.setPositionConversionFactor(posConversion);
-        sparkControl.setP(pidList[0]);
-        sparkControl.setI(pidList[1]);
-        sparkControl.setD(pidList[2]);
-        sparkControl.setFF(pidList[3]);
-        spark.enableVoltageCompensation(voltageComp);
-        sparkControl.setOutputRange(min, max);
-        spark.setSoftLimit(SoftLimitDirection.kForward, ((float)fLim));
-        spark.setSoftLimit(SoftLimitDirection.kReverse, ((float)bLim));
-        spark.enableSoftLimit(SoftLimitDirection.kForward, fEnable);
-        spark.enableSoftLimit(SoftLimitDirection.kReverse, bEnable);
-        spark.burnFlash();
+    public void configureSpark(SparkMaxConfig config){
+        spark.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         sparkEncode.setPosition(0.0);    
     }
     
