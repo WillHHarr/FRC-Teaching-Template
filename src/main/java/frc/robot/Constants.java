@@ -7,7 +7,6 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
-import frc.lib.util.CANSparkMaxUtil.Usage;
 
 public final class Constants {
     
@@ -149,14 +148,6 @@ public final class Constants {
         /* Swerve Idles */
         public static final IdleMode driveSparkIdle = IdleMode.kBrake;
         public static final IdleMode angleSparkIdle = IdleMode.kBrake;
-
-    }
-
-    public final static class Usages {
-
-        /* Swerve Usages */
-        public static final Usage driveSparkUsage = Usage.kAll;
-        public static final Usage angleSparkUsage = Usage.kPositionOnly;
 
     }
 

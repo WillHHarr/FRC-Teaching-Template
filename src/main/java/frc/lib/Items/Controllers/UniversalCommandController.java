@@ -1,5 +1,5 @@
-package frc.lib.Items;
+package frc.lib.Items.Controllers;
 
-public class MotorController {
+public class UniversalCommandController {
     
 }

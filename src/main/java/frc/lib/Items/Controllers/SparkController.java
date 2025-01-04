@@ -53,7 +53,7 @@ public class SparkController {
     spark = new SparkMax(canbusNumber, MotorType.kBrushless);
     sparkEncode = spark.getEncoder();
     sparkControl = spark.getClosedLoopController();
-    configureSpark(config);
+    configureSpark(Info.configNeo);
     }
 
     /* Sets and Flashes the Sparkmax to Passed States */

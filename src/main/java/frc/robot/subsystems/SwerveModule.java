@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.CANcoder;
+import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
@@ -85,7 +86,7 @@ public class SwerveModule {
       driveController.setReference(
           desiredState.speedMetersPerSecond,
           ControlType.kVelocity,
-          0,
+          ClosedLoopSlot.kSlot0,
           feedforward.calculate(desiredState.speedMetersPerSecond));
     }
   }
