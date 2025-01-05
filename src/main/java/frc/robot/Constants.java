@@ -1,11 +1,14 @@
 package frc.robot;
 
-//import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-//import com.pathplanner.lib.util.PIDConstants;
-//import com.pathplanner.lib.util.ReplanningConfig;
+import com.pathplanner.lib.config.ModuleConfig;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.controllers.PathFollowingController;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 
 public final class Constants {
@@ -82,17 +85,25 @@ public final class Constants {
         /* {Static, Velocity, Acceleration} */    
         public static final double[] driveMotorsSVA = new double[] {0.3, 2.55, 0.27};
 
-        /* Disabled until 25 release
 
-        public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
+        public static final PathFollowingController pathFollowerConfig = new PPHolonomicDriveController(
             new PIDConstants(5.0, 0, 0), // Translation constants 
-            new PIDConstants(5.0, 0, 0), // Rotation constants 
-            maxSpeed, 
-            modulePositions[0].getNorm(), // driveNeo base radius (distance from center to furthest module) 
-            new ReplanningConfig()
-        );
+            new PIDConstants(5.0, 0, 0) // Rotation constants 
+            );
 
-        */
+        //Extra Constatnts for RobotConfig
+        private static final double COFToCarpet = 1.0;
+
+        //MotorConfig Profiles THESE VALUES ARE PLACEHOLDER
+        DCMotor Neo = new DCMotor(maxAngularVelocity, driveGearRatio, angleGearRatio, COFToCarpet, maxSpeed, 0);
+        DCMotor Vortex = new DCMotor(maxAngularVelocity, driveGearRatio, angleGearRatio, COFToCarpet, maxSpeed, 0);
+        DCMotor Kraken = new DCMotor(maxAngularVelocity, driveGearRatio, angleGearRatio, COFToCarpet, maxSpeed, 0);
+
+        public static final RobotConfig config = 
+        new RobotConfig(10,
+                        10, 
+                        new ModuleConfig(wheelDiameter, maxSpeed, COFToCarpet, null, Electical.driveCurrentLim, 1), 
+                        modulePositions);
     }
 
     public static final class AutoConstants {

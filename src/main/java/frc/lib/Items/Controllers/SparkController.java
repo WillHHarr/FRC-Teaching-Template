@@ -6,6 +6,7 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SoftLimitConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import frc.lib.configs.Controllers.SparkControllerInfo;
@@ -15,13 +16,6 @@ public class SparkController {
     public RelativeEncoder sparkEncode;
     public SparkClosedLoopController sparkControl;
     public final int canbusNumber;
-    private double max = 1;
-    private double min = -1;
-    public double fLim = 0;
-    public double bLim = 0;
-    public boolean fEnable = false;
-    public boolean bEnable = false;
-
 
     /* Creates and Configures the Sparkmax Controller*/
     public SparkController(int canbusNumber, SparkControllerInfo Info){
@@ -35,24 +29,30 @@ public class SparkController {
     /* Creates and Configures the Sparkmax Controller Note: Pass null to N/A fields */
     public SparkController(int canbusNumber, SparkControllerInfo Info, Double min, Double max, Double fLim, Double bLim){
     this.canbusNumber = canbusNumber;
+
+    SoftLimitConfig softLim = new SoftLimitConfig();
+
     if(max != null){
-        this.max = max;
+        Info.configNeo.closedLoop.maxOutput(max);
     }
     if(min != null){
-        this.min = min;
+        Info.configNeo.closedLoop.minOutput(min);
     }
     if(fLim != null){
-        this.fLim = fLim;
-        fEnable = true;
+        softLim.forwardSoftLimit(fLim);
+        softLim.forwardSoftLimitEnabled(true);
     }
     if(bLim != null){
-        this.bLim = bLim;
-        bEnable = true;
+        softLim.reverseSoftLimit(bLim);
+        softLim.reverseSoftLimitEnabled(true);
     }
+
+    Info.configNeo.softLimit.apply(softLim);
 
     spark = new SparkMax(canbusNumber, MotorType.kBrushless);
     sparkEncode = spark.getEncoder();
     sparkControl = spark.getClosedLoopController();
+    
     configureSpark(Info.configNeo);
     }
 
