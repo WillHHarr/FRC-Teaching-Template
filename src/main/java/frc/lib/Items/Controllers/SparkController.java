@@ -7,8 +7,7 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SoftLimitConfig;
-import com.revrobotics.spark.config.SparkMaxConfig;
-
+import com.revrobotics.spark.config.SparkBaseConfig;
 import frc.lib.configs.Controllers.SparkControllerInfo;
 
 public class SparkController {
@@ -53,11 +52,16 @@ public class SparkController {
     sparkEncode = spark.getEncoder();
     sparkControl = spark.getClosedLoopController();
     
-    configureSpark(Info.configNeo);
+    if(Info.configNeo != null){
+        configureSpark(Info.configNeo);
+    } else if (Info.configFlex != null){
+        configureSpark(Info.configFlex);
+    }
+
     }
 
     /* Sets and Flashes the Sparkmax to Passed States */
-    public void configureSpark(SparkMaxConfig config){
+    public void configureSpark(SparkBaseConfig config){
         spark.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         sparkEncode.setPosition(0.0);    
     }
