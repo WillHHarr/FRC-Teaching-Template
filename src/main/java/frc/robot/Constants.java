@@ -94,15 +94,15 @@ public final class Constants {
         //Extra Constatnts for RobotConfig
         private static final double COFToCarpet = 1.0;
 
-        //MotorConfig Profiles THESE VALUES ARE PLACEHOLDER
-        DCMotor Neo = new DCMotor(maxAngularVelocity, driveGearRatio, angleGearRatio, COFToCarpet, maxSpeed, 0);
-        DCMotor Vortex = new DCMotor(maxAngularVelocity, driveGearRatio, angleGearRatio, COFToCarpet, maxSpeed, 0);
-        DCMotor Kraken = new DCMotor(maxAngularVelocity, driveGearRatio, angleGearRatio, COFToCarpet, maxSpeed, 0);
+        //Motor Config Files
+        private static final DCMotor Neo = new DCMotor(Electical.voltageComp, 2.6, 105, 1.8, 5676.0/9.5492965964254, 1);
+        private static final DCMotor Vortex = new DCMotor(Electical.voltageComp, 3.6, 211, 3.6, 6784/9.5492965964254, 1);
+        private static final DCMotor Kraken = new DCMotor(Electical.voltageComp, driveGearRatio, angleGearRatio, COFToCarpet, 6000/9.5492965964254, 1);
 
         public static final RobotConfig config = 
         new RobotConfig(10,
                         10, 
-                        new ModuleConfig(wheelDiameter, maxSpeed, COFToCarpet, null, Electical.driveCurrentLim, 1), 
+                        new ModuleConfig(wheelDiameter, maxSpeed, COFToCarpet, Vortex, Electical.driveCurrentLim, 1), 
                         modulePositions);
     }
 
