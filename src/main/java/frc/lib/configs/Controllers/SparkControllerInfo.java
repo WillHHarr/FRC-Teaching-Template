@@ -15,7 +15,7 @@ public class SparkControllerInfo {
     public double velConversion;
     public double[] pidList;
     public double voltageComp;
-    public SparkMaxConfig configNeo = null;
+    public SparkMaxConfig configMax = null;
     public SparkFlexConfig configFlex = null;
 
     public SparkControllerInfo driveNeo(){
@@ -27,16 +27,16 @@ public class SparkControllerInfo {
         pidList = PID.driveNeoPID;
         voltageComp = Electical.voltageComp;
 
-        configNeo = new SparkMaxConfig();
-            configNeo
+        configMax = new SparkMaxConfig();
+            configMax
                 .inverted(invert)
                 .idleMode(idleMode)
                 .smartCurrentLimit(currentLim, currentLim)
                 .voltageCompensation(voltageComp);
-            configNeo.encoder
+            configMax.encoder
                 .positionConversionFactor(posConversion)
                 .velocityConversionFactor(velConversion);
-            configNeo.closedLoop
+            configMax.closedLoop
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                 .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
 
@@ -52,14 +52,14 @@ public class SparkControllerInfo {
         pidList = PID.angleNeoPID;
         voltageComp = Electical.voltageComp;
 
-        configNeo = new SparkMaxConfig();
-        configNeo
+        configMax = new SparkMaxConfig();
+        configMax
             .inverted(invert)
             .idleMode(idleMode);
-        configNeo.encoder
+        configMax.encoder
             .positionConversionFactor(posConversion)
             .velocityConversionFactor(velConversion);
-        configNeo.closedLoop
+        configMax.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
             .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
         
@@ -75,14 +75,14 @@ public class SparkControllerInfo {
         pidList = PID.driveVortexPID;
         voltageComp = Electical.voltageComp;
 
-        configNeo = new SparkMaxConfig();
-        configNeo
+        configMax = new SparkMaxConfig();
+        configMax
             .inverted(invert)
             .idleMode(idleMode);
-        configNeo.encoder
+        configMax.encoder
             .positionConversionFactor(posConversion)
             .velocityConversionFactor(velConversion);
-        configNeo.closedLoop
+        configMax.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
             .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
 
