@@ -55,13 +55,18 @@ public class SparkControllerInfo {
         config = new SparkMaxConfig();
         config
             .inverted(invert)
-            .idleMode(idleMode);
-        config.encoder
+            .idleMode(idleMode)
+            .smartCurrentLimit(currentLim);
+        config.absoluteEncoder
+            .inverted(invert)
             .positionConversionFactor(posConversion)
             .velocityConversionFactor(velConversion);
         config.closedLoop
-            .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
+            .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
+            .pidf(pidList[0], pidList[1], pidList[2], pidList[3])
+            .outputRange(-1, 1)
+            .positionWrappingEnabled(true)
+            .positionWrappingInputRange(0, posConversion);
         
         return this;
     }
@@ -124,13 +129,19 @@ public class SparkControllerInfo {
         config = new SparkMaxConfig();
         config
             .inverted(invert)
-            .idleMode(idleMode);
-        config.encoder
+            .idleMode(idleMode)
+            .smartCurrentLimit(currentLim);
+        config.absoluteEncoder
+            .inverted(invert)
             .positionConversionFactor(posConversion)
             .velocityConversionFactor(velConversion);
         config.closedLoop
-            .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
+            .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
+            .pidf(pidList[0], pidList[1], pidList[2], pidList[3])
+            .outputRange(-1, 1)
+            .positionWrappingEnabled(true)
+            .positionWrappingInputRange(0, posConversion);
+        
 
         return this;
     }
@@ -147,13 +158,19 @@ public class SparkControllerInfo {
         config = new SparkFlexConfig();
         config
             .inverted(invert)
-            .idleMode(idleMode);
-        config.encoder
+            .idleMode(idleMode)
+            .smartCurrentLimit(currentLim);
+        config.absoluteEncoder
+            .inverted(invert)
             .positionConversionFactor(posConversion)
             .velocityConversionFactor(velConversion);
         config.closedLoop
-            .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
+            .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
+            .pidf(pidList[0], pidList[1], pidList[2], pidList[3])
+            .outputRange(-1, 1)
+            .positionWrappingEnabled(true)
+            .positionWrappingInputRange(0, posConversion);
+        
 
         return this;
     }
