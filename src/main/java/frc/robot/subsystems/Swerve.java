@@ -29,7 +29,7 @@ public class Swerve extends SubsystemBase {
   private final AHRS gyro;
 
   private SwerveDriveOdometry swerveOdometry;
-  private SwerveModule[] mSwerveMods;
+  private SwerveModuleIO[] mSwerveMods;
 
   private boolean isX = false;
 
@@ -42,10 +42,10 @@ public class Swerve extends SubsystemBase {
     gyro.reset();
     zeroGyro();
 
-    mSwerveMods = new SwerveModule[4];
+    mSwerveMods = new SwerveModuleIO[4];
 
     for(int i = 0; i <= 3; i++){
-        mSwerveMods[i] = new SwerveModule(new SwerveModuleInfo(i));
+        mSwerveMods[i] = new SwerveModuleRev(new SwerveModuleInfo(i));
     }
     
     swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getAngle(), getPositions());
@@ -101,7 +101,7 @@ public class Swerve extends SubsystemBase {
                     translation.getX(), translation.getY(), rotation, getAngle())
                 : new ChassisSpeeds(translation.getX(), translation.getY(), rotation));
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
-      for (SwerveModule mod : mSwerveMods) {
+      for (SwerveModuleIO mod : mSwerveMods) {
         if(isX){
           mod.setDesiredState(mod.xState, isOpenLoop);
         } else {
@@ -130,7 +130,7 @@ public class Swerve extends SubsystemBase {
   public void setModuleStates(SwerveModuleState[] desiredStates) {
     SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
 
-    for (SwerveModule mod : mSwerveMods) {
+    for (SwerveModuleIO mod : mSwerveMods) {
       mod.setDesiredState(desiredStates[mod.moduleNumber], false);
     }
   }
@@ -152,7 +152,7 @@ public class Swerve extends SubsystemBase {
 
   public SwerveModuleState[] getStates() {
     SwerveModuleState[] states = new SwerveModuleState[4];
-    for (SwerveModule mod : mSwerveMods) {
+    for (SwerveModuleIO mod : mSwerveMods) {
       states[mod.moduleNumber] = mod.getState();
     }
     return states;
@@ -160,7 +160,7 @@ public class Swerve extends SubsystemBase {
 
   public SwerveModulePosition[] getPositions() {
     SwerveModulePosition[] positions = new SwerveModulePosition[4];
-    for (SwerveModule mod : mSwerveMods) {
+    for (SwerveModuleIO mod : mSwerveMods) {
       positions[mod.moduleNumber] = mod.getPostion();
     }
     return positions;
@@ -183,7 +183,7 @@ public class Swerve extends SubsystemBase {
   }
 
   public void resetToAbsolute() {
-    for (SwerveModule mod : mSwerveMods) {
+    for (SwerveModuleIO mod : mSwerveMods) {
         mod.resetToAbsolute();
     }
   }
@@ -206,7 +206,7 @@ public class Swerve extends SubsystemBase {
   }
 
   public void report(){
-    for (SwerveModule mod : mSwerveMods) {
+    for (SwerveModuleIO mod : mSwerveMods) {
         SmartDashboard.putNumber(
             "Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
         SmartDashboard.putNumber(

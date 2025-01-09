@@ -15,7 +15,7 @@ import frc.lib.Items.Controllers.SparkController;
 import frc.lib.configs.Subsystems.SwerveModuleInfo;
 import frc.lib.math.OnboardModuleState;
 
-public class SwerveModule {
+public class SwerveModuleRev extends SwerveModuleIO{
   public int moduleNumber;
   private Rotation2d lastAngle;
   private Rotation2d angleOffset;
@@ -39,7 +39,7 @@ public class SwerveModule {
       new SimpleMotorFeedforward(
           Constants.Swerve.driveMotorsSVA[0], Constants.Swerve.driveMotorsSVA[1], Constants.Swerve.driveMotorsSVA[2]);
 
-  public SwerveModule(SwerveModuleInfo Info) {
+  public SwerveModuleRev(SwerveModuleInfo Info) {
     this.moduleNumber = Info.moduleNumber;
     this.angleOffset = Rotation2d.fromDegrees(Info.angleOffset);
 
@@ -64,6 +64,7 @@ public class SwerveModule {
     lastAngle = getState().angle;
   }
 
+  @Override
   public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
     // Custom optimize command, since default WPILib optimize assumes continuous controller which
     // REV and CTRE are not
@@ -73,7 +74,7 @@ public class SwerveModule {
       setSpeed(desiredState, isOpenLoop);
   }
 
-  void resetToAbsolute() {
+  public void resetToAbsolute() {
     double absolutePosition = getCanCoder().getDegrees() - angleOffset.getDegrees();
     integratedAngleEncoder.setPosition(absolutePosition);
   }
@@ -106,14 +107,17 @@ public class SwerveModule {
     return Rotation2d.fromDegrees(integratedAngleEncoder.getPosition());
   }
 
+  @Override
   public Rotation2d getCanCoder() {
     return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition().getValueAsDouble());
   }
 
+  @Override
   public SwerveModuleState getState() {
     return new SwerveModuleState(driveEncoder.getVelocity(), getAngle());
   }
 
+  @Override
   public SwerveModulePosition getPostion() {
     return new SwerveModulePosition(driveEncoder.getPosition(), getAngle());
   }
