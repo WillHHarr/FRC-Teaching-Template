@@ -112,7 +112,30 @@ public class SparkControllerInfo {
         return this;
     }
 
-    public SparkControllerInfo angleVortex(){
+    public SparkControllerInfo angleVortexMax(){
+        currentLim = Electical.angleCurrentLim;
+        invert = Setup.angleInvert;
+        idleMode = IdleModes.angleSparkIdle;
+        posConversion = ConversionFactors.angleConversionPositionFactor;
+        velConversion = ConversionFactors.angleConversionVelocityFactor;
+        pidList = PID.angleVortexPID;
+        voltageComp = Electical.voltageComp;
+
+        config = new SparkMaxConfig();
+        config
+            .inverted(invert)
+            .idleMode(idleMode);
+        config.encoder
+            .positionConversionFactor(posConversion)
+            .velocityConversionFactor(velConversion);
+        config.closedLoop
+            .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+            .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
+
+        return this;
+    }
+
+    public SparkControllerInfo angleVortexFlex(){
         currentLim = Electical.angleCurrentLim;
         invert = Setup.angleInvert;
         idleMode = IdleModes.angleSparkIdle;
