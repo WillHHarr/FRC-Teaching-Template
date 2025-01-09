@@ -22,7 +22,7 @@ public class SparkController {
         spark = new SparkMax(canbusNumber, MotorType.kBrushless);
         sparkEncode = spark.getEncoder();
         sparkControl = spark.getClosedLoopController();
-        configureSpark(Info.configMax);
+        configureSpark(Info.config);
      }
 
     /* Creates and Configures the Sparkmax Controller Note: Pass null to N/A fields */
@@ -32,10 +32,10 @@ public class SparkController {
     SoftLimitConfig softLim = new SoftLimitConfig();
 
     if(max != null){
-        Info.configMax.closedLoop.maxOutput(max);
+        Info.config.closedLoop.maxOutput(max);
     }
     if(min != null){
-        Info.configMax.closedLoop.minOutput(min);
+        Info.config.closedLoop.minOutput(min);
     }
     if(fLim != null){
         softLim.forwardSoftLimit(fLim);
@@ -46,17 +46,13 @@ public class SparkController {
         softLim.reverseSoftLimitEnabled(true);
     }
 
-    Info.configMax.softLimit.apply(softLim);
+    Info.config.softLimit.apply(softLim);
 
     spark = new SparkMax(canbusNumber, MotorType.kBrushless);
     sparkEncode = spark.getEncoder();
     sparkControl = spark.getClosedLoopController();
     
-    if(Info.configMax != null){
-        configureSpark(Info.configMax);
-    } else if (Info.configFlex != null){
-        configureSpark(Info.configFlex);
-    }
+    configureSpark(Info.config);
 
     }
 

@@ -1,6 +1,7 @@
 package frc.lib.configs.Controllers;
 
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -15,8 +16,7 @@ public class SparkControllerInfo {
     public double velConversion;
     public double[] pidList;
     public double voltageComp;
-    public SparkMaxConfig configMax = null;
-    public SparkFlexConfig configFlex = null;
+    public SparkBaseConfig config = null;
 
     public SparkControllerInfo driveNeo(){
         currentLim = Electical.driveCurrentLim;
@@ -27,16 +27,16 @@ public class SparkControllerInfo {
         pidList = PID.driveNeoPID;
         voltageComp = Electical.voltageComp;
 
-        configMax = new SparkMaxConfig();
-            configMax
+        config = new SparkMaxConfig();
+            config
                 .inverted(invert)
                 .idleMode(idleMode)
                 .smartCurrentLimit(currentLim, currentLim)
                 .voltageCompensation(voltageComp);
-            configMax.encoder
+            config.encoder
                 .positionConversionFactor(posConversion)
                 .velocityConversionFactor(velConversion);
-            configMax.closedLoop
+            config.closedLoop
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                 .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
 
@@ -52,14 +52,14 @@ public class SparkControllerInfo {
         pidList = PID.angleNeoPID;
         voltageComp = Electical.voltageComp;
 
-        configMax = new SparkMaxConfig();
-        configMax
+        config = new SparkMaxConfig();
+        config
             .inverted(invert)
             .idleMode(idleMode);
-        configMax.encoder
+        config.encoder
             .positionConversionFactor(posConversion)
             .velocityConversionFactor(velConversion);
-        configMax.closedLoop
+        config.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
             .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
         
@@ -75,14 +75,14 @@ public class SparkControllerInfo {
         pidList = PID.driveVortexPID;
         voltageComp = Electical.voltageComp;
 
-        configMax = new SparkMaxConfig();
-        configMax
+        config = new SparkMaxConfig();
+        config
             .inverted(invert)
             .idleMode(idleMode);
-        configMax.encoder
+        config.encoder
             .positionConversionFactor(posConversion)
             .velocityConversionFactor(velConversion);
-        configMax.closedLoop
+        config.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
             .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
 
@@ -98,14 +98,14 @@ public class SparkControllerInfo {
         pidList = PID.driveVortexPID;
         voltageComp = Electical.voltageComp;
 
-        configFlex = new SparkFlexConfig();
-        configFlex
+        config = new SparkFlexConfig();
+        config
             .inverted(invert)
             .idleMode(idleMode);
-        configFlex.encoder
+        config.encoder
             .positionConversionFactor(posConversion)
             .velocityConversionFactor(velConversion);
-        configFlex.closedLoop
+        config.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
             .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
 
@@ -121,14 +121,14 @@ public class SparkControllerInfo {
         pidList = PID.angleVortexPID;
         voltageComp = Electical.voltageComp;
 
-        configFlex = new SparkFlexConfig();
-        configFlex
+        config = new SparkFlexConfig();
+        config
             .inverted(invert)
             .idleMode(idleMode);
-        configFlex.encoder
+        config.encoder
             .positionConversionFactor(posConversion)
             .velocityConversionFactor(velConversion);
-        configFlex.closedLoop
+        config.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
             .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
 
