@@ -49,7 +49,7 @@ public final class Constants {
         public static final boolean canCoderInvert = true;
 
         /* Speed Settings */
-        public static final double maxSpeed = 5.00; // meters per second
+        public static final double maxSpeed = 1; // meters per second
         public static final double maxAngularVelocity = 4.25; // radians per second
 
         /* Mk4i Module Gear Ratios L2*/
@@ -134,7 +134,7 @@ public final class Constants {
         public static final double[] angleNeoPID = new double[] {0.01, 0.0, 0.0, 0.0};
 
         //These PIDS are not tuned
-        public static final double[] driveVortexPID = new double[] {0.3, 0.0, 0.0, 0.0};
+        public static final double[] driveVortexPID = new double[] {0.1, 0.0, 0.0, 0.0};
         public static final double[] angleVortexPID = new double[] {0.01, 0.0, 0.0, 0.0};
 
         public static final double[] driveKrakenPID = new double[] {0.3, 0.0, 0.0, 0.0};
