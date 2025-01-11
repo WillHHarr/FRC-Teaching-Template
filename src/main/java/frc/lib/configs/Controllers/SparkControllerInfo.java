@@ -1,7 +1,6 @@
 package frc.lib.configs.Controllers;
 
 import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -28,17 +27,17 @@ public class SparkControllerInfo {
         voltageComp = Electical.voltageComp;
 
         config = new SparkMaxConfig();
-            config
-                .inverted(invert)
-                .idleMode(idleMode)
-                .smartCurrentLimit(currentLim, currentLim)
-                .voltageCompensation(voltageComp);
-            config.encoder
-                .positionConversionFactor(posConversion)
-                .velocityConversionFactor(velConversion);
-            config.closedLoop
-                .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-                .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
+        config
+            .inverted(invert)
+            .idleMode(idleMode)
+            .smartCurrentLimit(currentLim)
+            .voltageCompensation(voltageComp);
+        config.encoder
+            .positionConversionFactor(posConversion)
+            .velocityConversionFactor(velConversion);
+        config.closedLoop
+            .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+            .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
 
         return this;
     }
@@ -56,14 +55,14 @@ public class SparkControllerInfo {
         config
             .inverted(invert)
             .idleMode(idleMode)
-            .smartCurrentLimit(currentLim);
-        config.absoluteEncoder
-            .inverted(invert)
+            .smartCurrentLimit(currentLim)
+            .voltageCompensation(voltageComp);
+        config.encoder
             .positionConversionFactor(posConversion)
             .velocityConversionFactor(velConversion);
         config.closedLoop
-            .pidf(pidList[0], pidList[1], pidList[2], pidList[3])
-            .outputRange(-1, 1);
+            .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+            .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
         
         return this;
     }
@@ -80,7 +79,9 @@ public class SparkControllerInfo {
         config = new SparkMaxConfig();
         config
             .inverted(invert)
-            .idleMode(idleMode);
+            .idleMode(idleMode)
+            .smartCurrentLimit(currentLim)
+            .voltageCompensation(voltageComp);
         config.encoder
             .positionConversionFactor(posConversion)
             .velocityConversionFactor(velConversion);
@@ -104,16 +105,14 @@ public class SparkControllerInfo {
         config
             .inverted(invert)
             .idleMode(idleMode)
-            .smartCurrentLimit(currentLim);
-        config.absoluteEncoder
-            .inverted(invert)
+            .smartCurrentLimit(currentLim)
+            .voltageCompensation(voltageComp);
+        config.encoder
             .positionConversionFactor(posConversion)
             .velocityConversionFactor(velConversion);
         config.closedLoop
-            .pidf(pidList[0], pidList[1], pidList[2], pidList[3])
-            .outputRange(-1, 1)
-            .positionWrappingEnabled(true)
-            .positionWrappingInputRange(0, posConversion);
+            .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+            .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
 
         return this;
     }

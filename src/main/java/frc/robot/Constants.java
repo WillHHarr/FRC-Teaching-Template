@@ -57,8 +57,8 @@ public final class Constants {
         //public static final double angleGearRatio = (150.0 / 7.0); // 150:7
         
         /* Mk4 Module Gear Ratios L3 */
-        public static final double driveGearRatio = (6.12 / 1.0); // 6.12:1
-        public static final double angleGearRatio = (12.8 / 1.0); // 12.8:1
+        public static final double driveGearRatio = (6.12); // 6.12:1
+        public static final double angleGearRatio = (12.8); // 12.8:1
 
         /* WCP Module Gear Ratios ***NOT MARKED DOWN PROPERLY - FIND INFO*** */
         //public static final double driveGearRatio = (6.75 / 1.0); // 6.75:1
