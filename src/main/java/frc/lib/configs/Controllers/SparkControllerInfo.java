@@ -3,6 +3,7 @@ package frc.lib.configs.Controllers;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import frc.robot.Constants.*;
@@ -15,8 +16,7 @@ public class SparkControllerInfo {
     public double velConversion;
     public double[] pidList;
     public double voltageComp;
-    public SparkMaxConfig configNeo = null;
-    public SparkFlexConfig configFlex = null;
+    public SparkBaseConfig config;
 
     public SparkControllerInfo driveNeo(){
         currentLim = Electical.driveCurrentLim;
@@ -27,16 +27,16 @@ public class SparkControllerInfo {
         pidList = PID.driveNeoPID;
         voltageComp = Electical.voltageComp;
 
-        configNeo = new SparkMaxConfig();
-            configNeo
+        config = new SparkMaxConfig();
+            config
                 .inverted(invert)
                 .idleMode(idleMode)
                 .smartCurrentLimit(currentLim, currentLim)
                 .voltageCompensation(voltageComp);
-            configNeo.encoder
+            config.encoder
                 .positionConversionFactor(posConversion)
                 .velocityConversionFactor(velConversion);
-            configNeo.closedLoop
+            config.closedLoop
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                 .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
 
@@ -52,16 +52,18 @@ public class SparkControllerInfo {
         pidList = PID.angleNeoPID;
         voltageComp = Electical.voltageComp;
 
-        configNeo = new SparkMaxConfig();
-        configNeo
+        config = new SparkMaxConfig();
+        config
             .inverted(invert)
-            .idleMode(idleMode);
-        configNeo.encoder
+            .idleMode(idleMode)
+            .smartCurrentLimit(currentLim);
+        config.absoluteEncoder
+            .inverted(invert)
             .positionConversionFactor(posConversion)
             .velocityConversionFactor(velConversion);
-        configNeo.closedLoop
-            .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
+        config.closedLoop
+            .pidf(pidList[0], pidList[1], pidList[2], pidList[3])
+            .outputRange(-1, 1);
         
         return this;
     }
@@ -75,14 +77,14 @@ public class SparkControllerInfo {
         pidList = PID.driveVortexPID;
         voltageComp = Electical.voltageComp;
 
-        configFlex = new SparkFlexConfig();
-        configFlex
+        config = new SparkMaxConfig();
+        config
             .inverted(invert)
             .idleMode(idleMode);
-        configFlex.encoder
+        config.encoder
             .positionConversionFactor(posConversion)
             .velocityConversionFactor(velConversion);
-        configFlex.closedLoop
+        config.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
             .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
 
@@ -98,16 +100,20 @@ public class SparkControllerInfo {
         pidList = PID.angleVortexPID;
         voltageComp = Electical.voltageComp;
 
-        configFlex = new SparkFlexConfig();
-        configFlex
+        config = new SparkMaxConfig();
+        config
             .inverted(invert)
-            .idleMode(idleMode);
-        configFlex.encoder
+            .idleMode(idleMode)
+            .smartCurrentLimit(currentLim);
+        config.absoluteEncoder
+            .inverted(invert)
             .positionConversionFactor(posConversion)
             .velocityConversionFactor(velConversion);
-        configFlex.closedLoop
-            .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
+        config.closedLoop
+            .pidf(pidList[0], pidList[1], pidList[2], pidList[3])
+            .outputRange(-1, 1)
+            .positionWrappingEnabled(true)
+            .positionWrappingInputRange(0, posConversion);
 
         return this;
     }

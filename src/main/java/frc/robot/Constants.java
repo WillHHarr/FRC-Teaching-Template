@@ -21,7 +21,7 @@ public final class Constants {
         public static final int[] driveMotors = new int[] {1, 3, 5, 7};
         public static final int[] angleMotors = new int[] {2, 4, 6, 8};
         public static final int[] moduleCancoders = new int[] {9, 10, 11, 12};
-        public static final double[] angleOffsets = new double[] {144.05, 318.86, 323.96, 221.48};
+        public static final double[] angleOffsets = new double[] {9.6, -9.3, 13.3, -78.8};
         public static final double[] xposition = new double[] {45, 45, -45, -45};
 
         /* Swerve Motor Inverts */
@@ -35,8 +35,8 @@ public final class Constants {
 
         /* driveNeotrain Calculation Constants */
         /* Input these units from center of swerve modules */
-        public static final double trackWidth = Units.inchesToMeters(18.75);
-        public static final double trackLength = Units.inchesToMeters(27.25);
+        public static final double trackWidth = Units.inchesToMeters(28);
+        public static final double trackLength = Units.inchesToMeters(28);
 
         /* Input Current Wheel Diameter, Can Change Due To Amount Of Wear */
         public static final double wheelDiameter = 100.0 / 1000.0; // mm to m

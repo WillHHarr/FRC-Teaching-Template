@@ -7,8 +7,7 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SoftLimitConfig;
-import com.revrobotics.spark.config.SparkMaxConfig;
-
+import com.revrobotics.spark.config.SparkBaseConfig;
 import frc.lib.configs.Controllers.SparkControllerInfo;
 
 public class SparkController {
@@ -23,7 +22,7 @@ public class SparkController {
         spark = new SparkMax(canbusNumber, MotorType.kBrushless);
         sparkEncode = spark.getEncoder();
         sparkControl = spark.getClosedLoopController();
-        configureSpark(Info.configNeo);
+        configureSpark(Info.config);
      }
 
     /* Creates and Configures the Sparkmax Controller Note: Pass null to N/A fields */
@@ -33,10 +32,10 @@ public class SparkController {
     SoftLimitConfig softLim = new SoftLimitConfig();
 
     if(max != null){
-        Info.configNeo.closedLoop.maxOutput(max);
+        Info.config.closedLoop.maxOutput(max);
     }
     if(min != null){
-        Info.configNeo.closedLoop.minOutput(min);
+        Info.config.closedLoop.minOutput(min);
     }
     if(fLim != null){
         softLim.forwardSoftLimit(fLim);
@@ -47,17 +46,17 @@ public class SparkController {
         softLim.reverseSoftLimitEnabled(true);
     }
 
-    Info.configNeo.softLimit.apply(softLim);
+    Info.config.softLimit.apply(softLim);
 
     spark = new SparkMax(canbusNumber, MotorType.kBrushless);
     sparkEncode = spark.getEncoder();
     sparkControl = spark.getClosedLoopController();
     
-    configureSpark(Info.configNeo);
+    configureSpark(Info.config);
     }
 
     /* Sets and Flashes the Sparkmax to Passed States */
-    public void configureSpark(SparkMaxConfig config){
+    public void configureSpark(SparkBaseConfig config){
         spark.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         sparkEncode.setPosition(0.0);    
     }
