@@ -40,6 +40,7 @@ public class Swerve extends SubsystemBase {
   public Swerve() {
     gyro = new AHRS(NavXComType.kMXP_SPI);
     gyro.reset();
+    SmartDashboard.putBoolean("GyroConnected", gyro.isConnected());
     zeroGyro();
 
     mSwerveMods = new SwerveModule[4];
@@ -214,5 +215,7 @@ public class Swerve extends SubsystemBase {
         SmartDashboard.putNumber(
             "Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);      
       }
+    
+    SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
 }
 }
