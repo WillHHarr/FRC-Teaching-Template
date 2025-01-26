@@ -67,6 +67,31 @@ public class SparkControllerInfo {
         return this;
     }
 
+    public SparkControllerInfo driveVortex(){
+        currentLim = Electical.driveCurrentLim;
+        invert = Setup.driveInvert;
+        idleMode = IdleModes.driveSparkIdle;
+        posConversion = ConversionFactors.driveConversionPositionFactor;
+        velConversion = ConversionFactors.driveConversionVelocityFactor;
+        pidList = PID.driveVortexPID;
+        voltageComp = Electical.voltageComp;
+
+        config = new SparkMaxConfig();
+        config
+            .inverted(invert)
+            .idleMode(idleMode)
+            .smartCurrentLimit(currentLim)
+            .voltageCompensation(voltageComp);
+        config.encoder
+            .positionConversionFactor(posConversion)
+            .velocityConversionFactor(velConversion);
+        config.closedLoop
+            .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+            .pidf(pidList[0], pidList[1], pidList[2], pidList[3]);
+
+        return this;
+    }
+
     public SparkControllerInfo driveVortexFlex(){
         currentLim = Electical.driveCurrentLim;
         invert = Setup.driveInvert;
@@ -92,7 +117,7 @@ public class SparkControllerInfo {
         return this;
     }
 
-    public SparkControllerInfo angleVortexMax(){
+    public SparkControllerInfo angleVortex(){
         currentLim = Electical.angleCurrentLim;
         invert = Setup.angleInvert;
         idleMode = IdleModes.angleSparkIdle;

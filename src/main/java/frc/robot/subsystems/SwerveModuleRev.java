@@ -77,7 +77,7 @@ public class SwerveModuleRev extends SwerveModuleIO{
       setSpeed(desiredState, isOpenLoop);
   }
 
-  void resetToAbsolute() {
+  public void resetToAbsolute() {
     if(isAbsolute){
       return;
     }
