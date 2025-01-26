@@ -26,7 +26,7 @@ public class RobotContainer {
   private final JoystickButton zeroGyro =
   new JoystickButton(driver, XboxController.Button.kBack.value);
   private final JoystickButton robotCentricBumper =
-  new JoystickButton(driver, XboxController.Button.kStart.value);
+  new JoystickButton(driver, XboxController.Button.kRightBumper.value);
   private final JoystickButton resetOdometry = 
   new JoystickButton(driver, XboxController.Button.kA.value);
   private final JoystickButton xSwerve = 
@@ -46,7 +46,8 @@ public class RobotContainer {
             () -> -driver.getRawAxis(rotationAxis),
             () -> robotCentric));
 
-    configureBindings();    
+    configureBindings();
+    swerve.zeroGyro();    
   }
 
   private void configureBindings() {

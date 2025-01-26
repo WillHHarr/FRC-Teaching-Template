@@ -10,6 +10,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.lib.Items.Controllers.SparkController;
 import frc.lib.configs.Subsystems.SwerveModuleInfo;
@@ -34,6 +35,8 @@ public class SwerveModuleRev extends SwerveModuleIO{
   private final SparkClosedLoopController angleController;
 
   public final SwerveModuleState xState;
+
+  private boolean isAbsolute = false;
 
   private final SimpleMotorFeedforward feedforward =
       new SimpleMotorFeedforward(
@@ -74,9 +77,15 @@ public class SwerveModuleRev extends SwerveModuleIO{
       setSpeed(desiredState, isOpenLoop);
   }
 
-  public void resetToAbsolute() {
+  void resetToAbsolute() {
+    if(isAbsolute){
+      return;
+    }
     double absolutePosition = getCanCoder().getDegrees() - angleOffset.getDegrees();
+    angleController.setReference(0, ControlType.kDutyCycle);
     integratedAngleEncoder.setPosition(absolutePosition);
+    SmartDashboard.putNumber("PassedAngle" + moduleNumber, absolutePosition);
+    isAbsolute = true;
   }
 
   private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
@@ -109,7 +118,7 @@ public class SwerveModuleRev extends SwerveModuleIO{
 
   @Override
   public Rotation2d getCanCoder() {
-    return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition().getValueAsDouble());
+    return Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValueAsDouble());
   }
 
   @Override

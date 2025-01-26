@@ -53,7 +53,6 @@ public class SparkController {
     sparkControl = spark.getClosedLoopController();
     
     configureSpark(Info.config);
-
     }
 
     /* Sets and Flashes the Sparkmax to Passed States */
