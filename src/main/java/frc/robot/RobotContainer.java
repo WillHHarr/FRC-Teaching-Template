@@ -46,7 +46,8 @@ public class RobotContainer {
             () -> -driver.getRawAxis(rotationAxis),
             () -> robotCentric));
 
-    configureBindings();    
+    configureBindings();
+    swerve.zeroGyro();    
   }
 
   private void configureBindings() {

@@ -49,7 +49,7 @@ public final class Constants {
         public static final boolean canCoderInvert = true;
 
         /* Speed Settings */
-        public static final double maxSpeed = 1; // meters per second
+        public static final double maxSpeed = 2; // meters per second
         public static final double maxAngularVelocity = 4.25; // radians per second
 
         /* Mk4i Module Gear Ratios L2*/
@@ -83,7 +83,7 @@ public final class Constants {
 
         /* driveNeo Motor Characterization Values */
         /* {Static, Velocity, Acceleration} */    
-        public static final double[] driveMotorsSVA = new double[] {0.3, 2.55, 0.27};
+        public static final double[] driveMotorsSVA = new double[] {0.2, 2.03, 0.48};
 
 
         public static final PathFollowingController pathFollowerConfig = new PPHolonomicDriveController(

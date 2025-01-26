@@ -81,8 +81,8 @@ public class SwerveModule {
       return;
     }
     double absolutePosition = getCanCoder().getDegrees() - angleOffset.getDegrees();
+    angleController.setReference(0, ControlType.kDutyCycle);
     integratedAngleEncoder.setPosition(absolutePosition);
-    angleController.setReference(0, ControlType.kPosition);
     SmartDashboard.putNumber("PassedAngle" + moduleNumber, absolutePosition);
     isAbsolute = true;
   }
