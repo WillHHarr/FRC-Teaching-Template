@@ -5,17 +5,9 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.lib.math.OnboardModuleState;
 
-public class SwerveModuleIO{
-  public int moduleNumber;
-
-  public final SwerveModuleState xState = null;
+public abstract class SwerveModuleIO{
   
   public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
-    // Custom optimize command, since default WPILib optimize assumes continuous controller which
-    // REV and CTRE are not
-    desiredState = OnboardModuleState.optimize(desiredState, getState().angle);
-      setAngle(desiredState);
-      setSpeed(desiredState, isOpenLoop);
   }
 
   public void resetToAbsolute() {
@@ -36,6 +28,10 @@ public class SwerveModuleIO{
   }
 
   public SwerveModulePosition getPostion() {
+    return null;
+  }
+
+  public SwerveModuleState xState(){
     return null;
   }
 }

@@ -77,6 +77,7 @@ public class SwerveModuleRev extends SwerveModuleIO{
       setSpeed(desiredState, isOpenLoop);
   }
 
+  
   public void resetToAbsolute() {
     if(isAbsolute){
       return;
@@ -129,5 +130,10 @@ public class SwerveModuleRev extends SwerveModuleIO{
   @Override
   public SwerveModulePosition getPostion() {
     return new SwerveModulePosition(driveEncoder.getPosition(), getAngle());
+  }
+
+  @Override
+  public SwerveModuleState xState(){
+    return xState;
   }
 }

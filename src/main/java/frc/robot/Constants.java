@@ -131,7 +131,7 @@ public final class Constants {
 
         /* Swerve PIDs */
         public static final double[] driveNeoPID = new double[] {0.3, 0.0, 0.0, 0.0};
-        public static final double[] angleNeoPID = new double[] {0.01, 0.0, 0.0, 0.0};
+        public static final double[] angleNeoPID = new double[] {0.00825, 0.0, 0.0, 0.0};
 
         //These PIDS are not tuned
         public static final double[] driveVortexPID = new double[] {0.1, 0.0, 0.0, 0.0};
