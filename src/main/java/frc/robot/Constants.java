@@ -31,6 +31,8 @@ public final class Constants {
     }
 
     public final static class Swerve {
+        public static final motorType m_motorType = motorType.talon;
+
         public static final double stickDeadband = 0.07;
 
         /* driveNeotrain Calculation Constants */
@@ -104,6 +106,11 @@ public final class Constants {
                         10, 
                         new ModuleConfig(wheelDiameter, maxSpeed, COFToCarpet, Vortex, Electical.driveCurrentLim, 1), 
                         modulePositions);
+
+        public enum motorType{
+            spark,
+            talon;
+        }
     }
 
     public static final class AutoConstants {
@@ -133,12 +140,13 @@ public final class Constants {
         public static final double[] driveNeoPID = new double[] {0.3, 0.0, 0.0, 0.0};
         public static final double[] angleNeoPID = new double[] {0.00825, 0.0, 0.0, 0.0};
 
-        //These PIDS are not tuned
         public static final double[] driveVortexPID = new double[] {0.1, 0.0, 0.0, 0.0};
         public static final double[] angleVortexPID = new double[] {0.01, 0.0, 0.0, 0.0};
 
-        public static final double[] driveKrakenPID = new double[] {0.3, 0.0, 0.0, 0.0};
-        public static final double[] angleKrakenPID = new double[] {0.01, 0.0, 0.0, 0.0};
+        /* Format {P, I, D, FF, S, V, A} */
+
+        public static final double[] driveKrakenPID = new double[] {0.3, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1};
+        public static final double[] angleKrakenPID = new double[] {0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1};
 
     }
 
@@ -150,7 +158,9 @@ public final class Constants {
         public static final double driveConversionVelocityFactor = driveConversionPositionFactor / 60 ; //rpm to rps
         
         public static final double angleConversionPositionFactor = 360.0 / Swerve.angleGearRatio;
+        public static final double angleConversionPositionFactorRotation = 1 / Swerve.angleGearRatio;
         public static final double angleConversionVelocityFactor = angleConversionPositionFactor / 60 ; //rpm to rps
+        public static final double angleConversionVelocityFactorRotation = angleConversionPositionFactorRotation / 60 ; //rpm to rps
 
     }
 

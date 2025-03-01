@@ -8,7 +8,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import frc.robot.Constants.*;
 
-public class SparkControllerInfo {
+public class ControllerInfo {
     public int currentLim;
     public boolean invert;
     public IdleMode idleMode;
@@ -19,7 +19,7 @@ public class SparkControllerInfo {
     public SparkBaseConfig sparkConfig;
     public TalonFXConfiguration talonConfig;
 
-    public SparkControllerInfo driveNeo(){
+    public ControllerInfo driveNeo(){
         currentLim = Electical.driveCurrentLim;
         invert = Setup.driveInvert;
         idleMode = IdleModes.driveSparkIdle;
@@ -44,7 +44,7 @@ public class SparkControllerInfo {
         return this;
     }
 
-    public SparkControllerInfo angleNeo(){
+    public ControllerInfo angleNeo(){
         currentLim = Electical.angleCurrentLim;
         invert = Setup.angleInvert;
         idleMode = IdleModes.angleSparkIdle;
@@ -69,7 +69,7 @@ public class SparkControllerInfo {
         return this;
     }
 
-    public SparkControllerInfo driveVortex(){
+    public ControllerInfo driveVortex(){
         currentLim = Electical.driveCurrentLim;
         invert = Setup.driveInvert;
         idleMode = IdleModes.driveSparkIdle;
@@ -94,7 +94,7 @@ public class SparkControllerInfo {
         return this;
     }
 
-    public SparkControllerInfo driveVortexFlex(){
+    public ControllerInfo driveVortexFlex(){
         currentLim = Electical.driveCurrentLim;
         invert = Setup.driveInvert;
         idleMode = IdleModes.driveSparkIdle;
@@ -119,7 +119,7 @@ public class SparkControllerInfo {
         return this;
     }
 
-    public SparkControllerInfo angleVortex(){
+    public ControllerInfo angleVortex(){
         currentLim = Electical.angleCurrentLim;
         invert = Setup.angleInvert;
         idleMode = IdleModes.angleSparkIdle;
@@ -148,7 +148,7 @@ public class SparkControllerInfo {
         return this;
     }
 
-    public SparkControllerInfo angleVortexFlex(){
+    public ControllerInfo angleVortexFlex(){
         currentLim = Electical.angleCurrentLim;
         invert = Setup.angleInvert;
         idleMode = IdleModes.angleSparkIdle;
@@ -173,7 +173,7 @@ public class SparkControllerInfo {
         return this;
     }
 
-    public SparkControllerInfo driveKraken(){
+    public ControllerInfo driveKraken(){
         currentLim = Electical.driveCurrentLim;
         invert = Setup.driveInvert;
         idleMode = IdleModes.driveSparkIdle;
@@ -181,10 +181,19 @@ public class SparkControllerInfo {
         velConversion = ConversionFactors.driveConversionVelocityFactor;
         pidList = PID.driveKrakenPID;
         voltageComp = Electical.voltageComp;
+
+        talonConfig.Slot0.kP = pidList[0];
+        talonConfig.Slot0.kD = pidList[1];
+        talonConfig.Slot0.kD = pidList[2];
+        talonConfig.Slot0.kS = pidList[4];
+        talonConfig.Slot0.kV = pidList[5];
+        talonConfig.MotionMagic.MotionMagicExpo_kA = pidList[6];
+        talonConfig.CurrentLimits.SupplyCurrentLimit = currentLim;
+
         return this;
     }
 
-    public SparkControllerInfo angleKraken(){
+    public ControllerInfo angleKraken(){
         currentLim = Electical.angleCurrentLim;
         invert = Setup.angleInvert;
         idleMode = IdleModes.angleSparkIdle;
@@ -192,6 +201,18 @@ public class SparkControllerInfo {
         velConversion = ConversionFactors.angleConversionVelocityFactor;
         pidList = PID.angleKrakenPID;
         voltageComp = Electical.voltageComp;
+
+        talonConfig = new TalonFXConfiguration();
+
+        talonConfig.Slot0.kP = pidList[0];
+        talonConfig.Slot0.kD = pidList[1];
+        talonConfig.Slot0.kD = pidList[2];
+        talonConfig.Slot0.kS = pidList[4];
+        talonConfig.Slot0.kV = pidList[5];
+        talonConfig.MotionMagic.MotionMagicExpo_kA = pidList[6];
+        talonConfig.CurrentLimits.SupplyCurrentLimit = currentLim;
+        talonConfig.Feedback.SensorToMechanismRatio = posConversion;
+
         return this;
     }
 

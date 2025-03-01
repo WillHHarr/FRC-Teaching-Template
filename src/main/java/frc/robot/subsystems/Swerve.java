@@ -22,7 +22,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.lib.configs.Subsystems.SwerveModuleInfo;
+import frc.lib.configs.Subsystems.SparkModuleInfo;
+import frc.lib.configs.Subsystems.TalonModuleInfo;
 import frc.robot.Constants;
 
 public class Swerve extends SubsystemBase {
@@ -45,8 +46,15 @@ public class Swerve extends SubsystemBase {
 
     mSwerveMods = new SwerveModuleIO[4];
 
+    //Asserts which Module controller constructer will be utilized
+    if(Constants.Swerve.m_motorType == Constants.Swerve.motorType.spark){
     for(int i = 0; i <= 3; i++){
-        mSwerveMods[i] = new SwerveModuleRev(new SwerveModuleInfo(i));
+        mSwerveMods[i] = new SwerveModuleRev(new SparkModuleInfo(i));
+    }
+    } else if(Constants.Swerve.m_motorType == Constants.Swerve.motorType.talon){
+      for(int i = 0; i <= 3; i++){
+        mSwerveMods[i] = new SwerveModuleTalon(new TalonModuleInfo(i));
+    } 
     }
     
     swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getAngle(), getPositions());
@@ -104,7 +112,7 @@ public class Swerve extends SubsystemBase {
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
       for (int i = 0; i < mSwerveMods.length; i++) {
         if(isX){
-          mSwerveMods[i].setDesiredState(mSwerveMods[i].xState(), true);
+          mSwerveMods[i].setDesiredState(mSwerveMods[i].xState(), isOpenLoop);
         } else {
           mSwerveMods[i].setDesiredState(swerveModuleStates[i], isOpenLoop);
         }

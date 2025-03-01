@@ -8,7 +8,7 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SoftLimitConfig;
 import com.revrobotics.spark.config.SparkBaseConfig;
-import frc.lib.configs.Controllers.SparkControllerInfo;
+import frc.lib.configs.Controllers.ControllerInfo;
 
 public class SparkController {
     public SparkMax spark;
@@ -17,7 +17,7 @@ public class SparkController {
     public final int canbusNumber;
 
     /* Creates and Configures the Sparkmax Controller*/
-    public SparkController(int canbusNumber, SparkControllerInfo Info){
+    public SparkController(int canbusNumber, ControllerInfo Info){
         this.canbusNumber = canbusNumber;
         spark = new SparkMax(canbusNumber, MotorType.kBrushless);
         sparkEncode = spark.getEncoder();
@@ -26,7 +26,7 @@ public class SparkController {
      }
 
     /* Creates and Configures the Sparkmax Controller Note: Pass null to N/A fields */
-    public SparkController(int canbusNumber, SparkControllerInfo Info, Double min, Double max, Double fLim, Double bLim){
+    public SparkController(int canbusNumber, ControllerInfo Info, Double min, Double max, Double fLim, Double bLim){
     this.canbusNumber = canbusNumber;
 
     SoftLimitConfig softLim = new SoftLimitConfig();

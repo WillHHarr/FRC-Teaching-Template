@@ -1,70 +1,57 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.controls.PositionVoltage;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.CANcoder;
-import com.revrobotics.spark.ClosedLoopSlot;
-import com.revrobotics.spark.SparkClosedLoopController;
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkBase.ControlType;
-import com.revrobotics.RelativeEncoder;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
-import frc.lib.Items.Controllers.SparkController;
-import frc.lib.configs.Subsystems.SparkModuleInfo;
+import frc.lib.Items.Controllers.TalonController;
+import frc.lib.configs.Subsystems.TalonModuleInfo;
 import frc.lib.math.OnboardModuleState;
 
-public class SwerveModuleRev extends SwerveModuleIO{
+public class SwerveModuleTalon extends SwerveModuleIO{
   public int moduleNumber;
   private Rotation2d lastAngle;
   private Rotation2d angleOffset;
 
-  private SparkController drive;
-  private SparkController angle;
+  private TalonController angle;
+  private TalonController drive;
 
-  private SparkMax angleMotor;
-  private SparkMax driveMotor;
+  private TalonFX angleMotor;
+  private TalonFX driveMotor;
 
-  private RelativeEncoder driveEncoder;
-  private RelativeEncoder integratedAngleEncoder;
   private CANcoder angleEncoder;
-
-  private final SparkClosedLoopController driveController;
-  private final SparkClosedLoopController angleController;
 
   public final SwerveModuleState xState;
 
   private boolean isAbsolute = false;
 
-  private final SimpleMotorFeedforward feedforward =
-      new SimpleMotorFeedforward(
-          Constants.Swerve.driveMotorsSVA[0], Constants.Swerve.driveMotorsSVA[1], Constants.Swerve.driveMotorsSVA[2]);
+  private double driveConvert;
+  private double angleConvert;
 
-  public SwerveModuleRev(SparkModuleInfo Info) {
+  public SwerveModuleTalon(TalonModuleInfo Info) {
     this.moduleNumber = Info.moduleNumber;
     this.angleOffset = Rotation2d.fromDegrees(Info.angleOffset);
 
-    this.drive = Info.drive;
-    this.angle = Info.angle;
-
     xState = new SwerveModuleState(0, Rotation2d.fromDegrees(Info.xPos));
+
+    angle = Info.angle;
+    drive = Info.drive;
 
     /* Angle Encoder Config */
     angleEncoder = Info.cancoder;
 
-    /* Angle Motor Config */
-    angleMotor = angle.spark;
-    integratedAngleEncoder = angleMotor.getEncoder();
-    angleController = angleMotor.getClosedLoopController();
-
-    /* Drive Motor Config */
-    driveMotor = drive.spark;
-    driveEncoder = driveMotor.getEncoder();
-    driveController = driveMotor.getClosedLoopController();
+    angleMotor = angle.talon;
+    driveMotor = drive.talon;
 
     lastAngle = getState().angle;
+
+    driveConvert = Info.driveConvert;
+    angleConvert = Info.angleConvert;
   }
 
   @Override
@@ -83,8 +70,9 @@ public class SwerveModuleRev extends SwerveModuleIO{
       return;
     }
     double absolutePosition = getCanCoder().getDegrees() - angleOffset.getDegrees();
-    angleController.setReference(0, ControlType.kDutyCycle);
-    integratedAngleEncoder.setPosition(absolutePosition);
+    PositionVoltage target = new PositionVoltage(absolutePosition);
+    angleMotor.setPosition(absolutePosition);
+    angleMotor.setControl(target);
     SmartDashboard.putNumber("PassedAngle" + moduleNumber, absolutePosition);
     isAbsolute = true;
   }
@@ -94,11 +82,8 @@ public class SwerveModuleRev extends SwerveModuleIO{
       double percentOutput = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
       driveMotor.set(percentOutput);
     } else {
-      driveController.setReference(
-          desiredState.speedMetersPerSecond,
-          ControlType.kVelocity,
-          ClosedLoopSlot.kSlot0,
-          feedforward.calculate(desiredState.speedMetersPerSecond));
+      VelocityVoltage target = new VelocityVoltage(ConvertDrive(desiredState.speedMetersPerSecond));
+      driveMotor.setControl(target);
     }
   }
 
@@ -109,12 +94,13 @@ public class SwerveModuleRev extends SwerveModuleIO{
             ? lastAngle
             : desiredState.angle;
 
-    angleController.setReference(angle.getDegrees(), ControlType.kPosition);
+    PositionVoltage target = new PositionVoltage(ConvertAngle(angle.getDegrees()));
+    angleMotor.setControl(target);
     lastAngle = angle;
   }
 
   private Rotation2d getAngle() {
-    return Rotation2d.fromDegrees(integratedAngleEncoder.getPosition());
+    return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition().getValueAsDouble());
   }
 
   @Override
@@ -124,16 +110,27 @@ public class SwerveModuleRev extends SwerveModuleIO{
 
   @Override
   public SwerveModuleState getState() {
-    return new SwerveModuleState(driveEncoder.getVelocity(), getAngle());
+    return new SwerveModuleState(driveMotor.getVelocity().getValueAsDouble(), getAngle());
   }
 
   @Override
   public SwerveModulePosition getPostion() {
-    return new SwerveModulePosition(driveEncoder.getPosition(), getAngle());
+    return new SwerveModulePosition(driveMotor.getPosition().getValueAsDouble(), getAngle());
   }
 
   @Override
   public SwerveModuleState xState(){
     return xState;
   }
+
+  // Coverts m/s to rotations/s
+  private double ConvertDrive(double angle){
+    return angle * driveConvert;
+  }
+
+  // Coverts m/s to rotations/s
+  private double ConvertAngle(double angle){
+    return angle * angleConvert;
+  }
+
 }

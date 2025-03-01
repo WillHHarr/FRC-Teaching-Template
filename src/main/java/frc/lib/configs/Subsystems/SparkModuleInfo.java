@@ -3,10 +3,10 @@ package frc.lib.configs.Subsystems;
 import com.ctre.phoenix6.hardware.CANcoder;
 
 import frc.lib.Items.Controllers.SparkController;
-import frc.lib.configs.Controllers.SparkControllerInfo;
+import frc.lib.configs.Controllers.ControllerInfo;
 import frc.robot.Constants;
 
-public class SwerveModuleInfo {
+public class SparkModuleInfo {
     public int moduleNumber;
     public SparkController drive;
     public SparkController angle;
@@ -18,10 +18,10 @@ public class SwerveModuleInfo {
      * @param moduleNumber
      */
 
-    public SwerveModuleInfo(int moduleNumber){
+    public SparkModuleInfo(int moduleNumber){
         this.moduleNumber = moduleNumber;
-        drive = new SparkController(Constants.Setup.driveMotors[moduleNumber], new SparkControllerInfo().driveVortex());
-        angle = new SparkController(Constants.Setup.angleMotors[moduleNumber], new SparkControllerInfo().angleNeo());
+        drive = new SparkController(Constants.Setup.driveMotors[moduleNumber], new ControllerInfo().driveVortex());
+        angle = new SparkController(Constants.Setup.angleMotors[moduleNumber], new ControllerInfo().angleNeo());
         cancoder = new CANcoder(Constants.Setup.moduleCancoders[moduleNumber]);
         angleOffset = Constants.Setup.angleOffsets[moduleNumber];
         xPos = Constants.Setup.xposition[moduleNumber];
