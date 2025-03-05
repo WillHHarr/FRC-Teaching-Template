@@ -182,6 +182,8 @@ public class ControllerInfo {
         pidList = PID.driveKrakenPID;
         voltageComp = Electical.voltageComp;
 
+        talonConfig = new TalonFXConfiguration();
+
         talonConfig.Slot0.kP = pidList[0];
         talonConfig.Slot0.kD = pidList[1];
         talonConfig.Slot0.kD = pidList[2];

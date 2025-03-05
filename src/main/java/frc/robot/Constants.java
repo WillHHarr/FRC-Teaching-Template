@@ -59,12 +59,12 @@ public final class Constants {
         //public static final double angleGearRatio = (150.0 / 7.0); // 150:7
         
         /* Mk4 Module Gear Ratios L3 */
-        public static final double driveGearRatio = (6.12); // 6.12:1
-        public static final double angleGearRatio = (12.8); // 12.8:1
+        //public static final double driveGearRatio = (6.12); // 6.12:1
+        //public static final double angleGearRatio = (12.8); // 12.8:1
 
-        /* WCP Module Gear Ratios ***NOT MARKED DOWN PROPERLY - FIND INFO*** */
-        //public static final double driveGearRatio = (6.75 / 1.0); // 6.75:1
-        //public static final double angleGearRatio = (150.0 / 7.0); // 150:7        
+        /* WCP Module Gear Ratios X2 12T */
+        public static final double driveGearRatio = (5.46); 
+        public static final double angleGearRatio = (11.3142);        
 
         /* Swerve Module Positions (Currently in solid rectangleNeo context) */
         public static final Translation2d[] modulePositions = new Translation2d[] {
@@ -145,8 +145,8 @@ public final class Constants {
 
         /* Format {P, I, D, FF, S, V, A} */
 
-        public static final double[] driveKrakenPID = new double[] {0.3, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1};
-        public static final double[] angleKrakenPID = new double[] {0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1};
+        public static final double[] driveKrakenPID = new double[] {0.3, 0.0, 0.0, 0.0, 0.15, 0.102, 0.1};
+        public static final double[] angleKrakenPID = new double[] {0.01, 0.0, 0.0, 0.0, 0.15, 0.102, 0.1};
 
     }
 
