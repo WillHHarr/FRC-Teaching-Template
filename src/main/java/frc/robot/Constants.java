@@ -21,7 +21,7 @@ public final class Constants {
         public static final int[] driveMotors = new int[] {1, 3, 5, 7};
         public static final int[] angleMotors = new int[] {2, 4, 6, 8};
         public static final int[] moduleCancoders = new int[] {9, 10, 11, 12};
-        public static final double[] angleOffsets = new double[] {9.6, -9.3, 13.3, -78.8};
+        public static final double[] angleOffsets = new double[] {16.0, 26.1, 47.6, 90.8}; //{9.6, -9.3, 13.3, -78.8};
         public static final double[] xposition = new double[] {45, 45, -45, -45};
 
         /* Swerve Motor Inverts */
@@ -140,13 +140,13 @@ public final class Constants {
         public static final double[] driveNeoPID = new double[] {0.3, 0.0, 0.0, 0.0};
         public static final double[] angleNeoPID = new double[] {0.00825, 0.0, 0.0, 0.0};
 
-        public static final double[] driveVortexPID = new double[] {0.1, 0.0, 0.0, 0.0};
-        public static final double[] angleVortexPID = new double[] {0.01, 0.0, 0.0, 0.0};
+        public static final double[] driveVortexPID = new double[] {0.3, 0.0, 0.0, 0.0};
+        public static final double[] angleVortexPID = new double[] {0.0085, 0.0, 0.0, 0.0};
 
         /* Format {P, I, D, FF, S, V, A} */
 
         public static final double[] driveKrakenPID = new double[] {0.3, 0.0, 0.0, 0.0, 0.15, 0.102, 0.1};
-        public static final double[] angleKrakenPID = new double[] {0.01, 0.0, 0.0, 0.0, 0.15, 0.102, 0.1};
+        public static final double[] angleKrakenPID = new double[] {0.15, 0.0, 0.0, 0.0, 0.15, 0.102, 0.1};
 
     }
 

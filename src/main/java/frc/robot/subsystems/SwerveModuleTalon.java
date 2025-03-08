@@ -2,11 +2,13 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
+import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.lib.Items.Controllers.TalonController;
@@ -70,8 +72,8 @@ public class SwerveModuleTalon extends SwerveModuleIO{
       return;
     }
     double absolutePosition = getCanCoder().getDegrees() - angleOffset.getDegrees();
-    PositionVoltage target = new PositionVoltage(absolutePosition);
-    angleMotor.setPosition(absolutePosition);
+    VoltageOut target = new VoltageOut(0.0);
+    angleMotor.setPosition(ConvertAngleIn(Units.degreesToRotations(absolutePosition)));
     angleMotor.setControl(target);
     SmartDashboard.putNumber("PassedAngle" + moduleNumber, absolutePosition);
     isAbsolute = true;
@@ -82,7 +84,7 @@ public class SwerveModuleTalon extends SwerveModuleIO{
       double percentOutput = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
       driveMotor.set(percentOutput);
     } else {
-      VelocityVoltage target = new VelocityVoltage(ConvertDrive(desiredState.speedMetersPerSecond));
+      VelocityVoltage target = new VelocityVoltage(0).withVelocity(ConvertDriveIn(desiredState.speedMetersPerSecond));
       driveMotor.setControl(target);
     }
   }
@@ -94,8 +96,8 @@ public class SwerveModuleTalon extends SwerveModuleIO{
             ? lastAngle
             : desiredState.angle;
 
-    PositionVoltage target = new PositionVoltage(ConvertAngle(angle.getDegrees()));
-    angleMotor.setControl(target);
+    PositionVoltage target = new PositionVoltage(0);
+    angleMotor.setControl(target.withPosition(ConvertAngleIn(Units.degreesToRotations(angle.getDegrees()))));
     lastAngle = angle;
   }
 
@@ -124,13 +126,24 @@ public class SwerveModuleTalon extends SwerveModuleIO{
   }
 
   // Coverts m/s to rotations/s
-  private double ConvertDrive(double angle){
-    return angle * driveConvert;
+  private double ConvertDriveIn(double angle){
+    return angle / driveConvert;
   }
 
   // Coverts m/s to rotations/s
-  private double ConvertAngle(double angle){
+  private double ConvertAngleIn(double angle){
+    return angle / angleConvert;
+  }
+
+  // Coverts m/s to rotations/s
+  private double ConvertDriveOut(double angle){
+    return angle * driveConvert;
+  }
+  
+  // Coverts m/s to rotations/s
+  private double ConvertAngleOut(double angle){
     return angle * angleConvert;
   }
+  
 
 }

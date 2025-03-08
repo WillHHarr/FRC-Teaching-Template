@@ -5,6 +5,7 @@ import com.ctre.phoenix6.hardware.CANcoder;
 import frc.lib.Items.Controllers.TalonController;
 import frc.lib.configs.Controllers.ControllerInfo;
 import frc.robot.Constants;
+import frc.robot.Constants.Swerve;
 
 public class TalonModuleInfo {
     public int moduleNumber;
